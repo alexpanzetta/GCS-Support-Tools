@@ -17,5 +17,5 @@ Used to troubleshoot ArchestrA Bootstrap
 ### <b>[WWClient](WWClient.zip)</b>
 Used to troubleshoot SuiteLink connections.
 
-### <b>[Preactivated License](PreactivatedLicense.loc)
+### <b>[Preactivated License]</b>(PreactivatedLicense.loc)
 Preactivated License to be saved in C:\ProgramData\AVEVA\Licensing\LocalLicensePool
