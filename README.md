@@ -9,7 +9,7 @@ Used for forcibly removing the locally deployed platform.
 Used to check/fix damaged History Blocks
 
 ### <b>[StorageView](StorageView.zip)</b>
-Used to open History Blocks. <b>WARNING: DO NOT USE THIS IN THE CIRCULAR DIRECTORY!!</b>
+Used to analyze History Blocks. <b>WARNING: DO NOT USE THIS IN THE CIRCULAR DIRECTORY!!</b>
 
 ### <b>[TestBootstrap](TestBootstrap.zip)</b>
 Used to troubleshoot ArchestrA Bootstrap
