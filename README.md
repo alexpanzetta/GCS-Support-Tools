@@ -17,5 +17,10 @@ Used to troubleshoot ArchestrA Bootstrap
 ### <b>[WWClient](WWClient.zip)</b>
 Used to troubleshoot SuiteLink connections.
 
+### <b>[Mobile OPC Explorer](MobileOPCExplorer.exe)</b>
+Used to troubleshoot OPC connections.
+
 ### <b>[Preactivated License](PreactivatedLicense.loc)</b>
 Preactivated License to be saved in C:\ProgramData\AVEVA\Licensing\LocalLicensePool
+
+
