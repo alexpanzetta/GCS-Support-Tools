@@ -1,6 +1,8 @@
 # GCS-Support-Tools
 
-This repository is used for sharing AVEVA/Wonderware troubleshooting tools used by Customer Support.
+This repository is used for sharing AVEVA/Wonderware troubleshooting tools used by Customer Support; the reason to publish those tools here is to facilitate the sharing of these tools during remote support sessions with AVEVA Support personnel.
+The use of these tools should be restricted to people with proper knowledge (E.g. Wonderware Certified Support Providers)
+
 
 ### <b>[Platform Remover](Platform%20Remover.zip)</b>
 Used for forcibly removing the locally deployed platform.
