@@ -1,7 +1,7 @@
 <#
 .SYNOPSIS
-    This script Will retrieve ArchestrA Service Bus (a.k.a ASB) certificates use by 
-    Platform Common Services (a.k.a PCS)
+    This script Will retrieve info from ArchestrA Service Bus (a.k.a ASB) certificates use by 
+    Platform Common Services (a.k.a PCS) and save the resuls to a text file.
 
 .NOTES   
     Name       : Get-ASB-Certificates.ps1
