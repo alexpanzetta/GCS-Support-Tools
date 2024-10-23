@@ -1,0 +1,26 @@
+﻿C:\ProgramData\ArchestrA\
+C:\ProgramData\AVEVA\
+C:\ProgramData\InTouchDemos\
+C:\ProgramData\Schneider Electric\
+C:\ProgramData\Sentinel System Monitor\
+C:\ProgramData\Wonderware\
+C:\Program Files\Common Files\ArchestrA\
+C:\Program Files (x86)\ArchestrA\
+C:\Program Files (x86)\AVEVA\
+C:\Program Files (x86)\Common Files\ArchestrA\
+C:\Program Files (x86)\Common Files\Schneider Electric\
+C:\Program Files (x86)\Schneider Electric
+C:\Program Files (x86)\Sentinel System Monitor
+C:\Program Files (x86)\Wonderware\
+C:\Historian\Data\
+C:\Users\Public\Wonderware\
+C:\Program Files (x86)\FactorySuite\
+C:\InSQL\Data\
+C:\ProgramData\ArchestrA\
+C:\Program Files (x86)\ArchestrA\Framework\bin\
+C:\Users\Public\Wonderware\InTouch Applications\ 
+C:\ProgramData\AVEVA\Licensing\
+C:\ProgramData\FNEServer\
+%USERPROFILE%\.avevalic
+C:\ProgramData\ArchestrA\LogFiles\
+C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\ 
