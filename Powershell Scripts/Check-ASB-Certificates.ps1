@@ -10,7 +10,7 @@
     LastModified: October 2024
 #>
 
-Get-ChildItem -Path Cert:\LocalMachine\My | where { $_.Issuer -like "*ASB*" }  |
+Get-ChildItem -Path Cert:\LocalMachine\My | Where-Object { $_.Issuer -like "*ASB*" }  |
   ForEach-Object {
     $cert = $_
     $CertificateName = $($cert.FriendlyName)
