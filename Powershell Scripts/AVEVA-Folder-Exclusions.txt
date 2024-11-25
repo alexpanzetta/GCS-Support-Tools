@@ -19,6 +19,7 @@ C:\InSQL\Data\
 C:\ProgramData\ArchestrA\
 C:\Program Files (x86)\ArchestrA\Framework\bin\
 C:\Users\Public\Wonderware\InTouch Applications\ 
+C:\Windows\ServiceProfiles
 C:\ProgramData\AVEVA\Licensing\
 C:\ProgramData\FNEServer\
 %USERPROFILE%\.avevalic
