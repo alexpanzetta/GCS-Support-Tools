@@ -26,7 +26,7 @@ $result = $FileBrowser.ShowDialog()
 # Check if the user clicked OK
 if ($result -eq "OK") {
     # Get the selected file path
-    $ExcludedFolders = $FileBrowser.FileName
+    $ExcludedFolders = Get-Content -Path $FileBrowser.FileName
     }
 else {
     Write-Host "Cannot continue without a file path"
