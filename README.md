@@ -19,7 +19,6 @@ Used to troubleshoot ArchestrA Bootstrap
 ### <b>[WWClient](WWClient.zip)</b>
 Used to troubleshoot SuiteLink connections.
 
-
 ### <b>[Galaxy backup Utility (official)](Galaxy_Backup_Setup.zip)</b>
 CMD line utility for Galaxy backups.
 
