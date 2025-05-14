@@ -1,4 +1,4 @@
-﻿<#
+<#
 .DESCRIPTION
         Gathers computer information to be shaed with Global Customer Support
 .AUTHOR
@@ -13,7 +13,7 @@
 
 # Function to get installed software by AVEVA
 function Get-SchneiderSoftware {
-    $searchVendors = "AVEVA", "Wonderware", "Schneider"
+    $vendorKeywords = "AVEVA", "Wonderware", "Schneider"
 
     $regPaths = @(
         "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*",
@@ -22,12 +22,14 @@ function Get-SchneiderSoftware {
 
     $softwareList = foreach ($path in $regPaths) {
         Get-ItemProperty -Path $path -ErrorAction SilentlyContinue | Where-Object {
-            $searchVendors | ForEach-Object { $_ -and $_ -ne "" -and $_ -match $_.Publisher }
+            ($_.DisplayName -and ($vendorKeywords | Where-Object { $_ -and $_ -ne "" -and $_ -match $_.DisplayName })) -or
+            ($_.Publisher -and ($vendorKeywords | Where-Object { $_ -and $_ -ne "" -and $_ -match $_.Publisher }))
         }
     }
 
     return $softwareList | Sort-Object DisplayName
 }
+
 
 function Get-SubnetMask {
         param ($prefix)
@@ -69,11 +71,6 @@ $report += "<li><strong>Build:</strong> $($sysInfo.BuildNumber)</li>"
 $report += "<li><strong>Install Date:</strong> $($sysInfo.InstallDate)</li>"
 $report += "</ul>"
 
-$report += "<h3>Installed Hotfixes</h3><ul>"
-foreach ($fix in $hotfixes) {
-    $report += "<li>$($fix.HotFixID) - Installed on $($fix.InstalledOn)</li>"
-}
-$report += "</ul>"
 
 # --- NETWORK INFO ---
 $report += "<h2>Network Configuration</h2>"
@@ -92,6 +89,61 @@ foreach ($adapter in $adapters) {
     $report += "<li><strong>DNS Servers:</strong> $dns</li>"
     $report += "</ul>"
 }
+
+# --- HOSTS FILE CONTENT ---
+$report += "<h2>Hosts File (C:\Windows\System32\drivers\etc\hosts)</h2>"
+
+$hostsPath = "$env:SystemRoot\System32\drivers\etc\hosts"
+if (Test-Path $hostsPath) {
+    $hostsContent = Get-Content $hostsPath -ErrorAction SilentlyContinue
+    if ($hostsContent) {
+        $escapedContent = $hostsContent | ForEach-Object { [System.Web.HttpUtility]::HtmlEncode($_) + "<br>" }
+        $report += "<div style='background:#f4f4f4; border:1px solid #ccc; padding:10px; font-family:monospace;'>"
+        $report += ($escapedContent -join "`n")
+        $report += "</div>"
+    } else {
+        $report += "<p><i>The hosts file is empty.</i></p>"
+    }
+} else {
+    $report += "<p><i>Hosts file not found.</i></p>"
+}
+
+# --- ArchestrA PlatformNode Check ---
+$report += "<h2>ArchestrA GR Platform PING Check</h2>"
+
+$regKey = "HKLM:\SOFTWARE\WOW6432Node\ArchestrA\Framework\Platform\PlatformNodes\Platform1"
+try {
+    if (Test-Path $regKey) {
+        $machineName = Get-ItemProperty -Path $regKey -Name Machine -ErrorAction Stop | Select-Object -ExpandProperty Machine
+        $report += "<p><strong>Registry key found.</strong> Machine name: <code>$machineName</code></p>"
+
+        # Try to resolve IP address
+        try {
+            $dnsResult = [System.Net.Dns]::GetHostAddresses($machineName)| Where-Object { $_.AddressFamily -eq 'InterNetwork' } |Select-Object -Expand IPAddressToString
+            $report += "<p><strong>Resolved IP:</strong> $dnsResult</p>"
+        } catch {
+            $report += "<p style='color:red;'><strong>Failed to resolve IP address for:</strong> $machineName</p>"
+        }
+
+        # Ping the host
+        $pingResult = Test-Connection -ComputerName $machineName -Count 2 -Quiet
+        if ($pingResult) {
+            $report += "<p><strong>Ping status:</strong> <span style='color:green;'>Successful</span></p>"
+        } else {
+            $report += "<p><strong>Ping status:</strong> <span style='color:red;'>Failed</span></p>"
+        }
+    } else {
+        $report += "<p><i>Registry key not found: $regKey</i></p>"
+    }
+} catch {
+    $report += "<p style='color:red;'>Error accessing registry key: $($_.Exception.Message)</p>"
+}
+
+$report += "<h3>Installed Hotfixes</h3><ul>"
+foreach ($fix in $hotfixes) {
+    $report += "<li>$($fix.HotFixID) - Installed on $($fix.InstalledOn)</li>"
+}
+$report += "</ul>"
 
 # --- SOFTWARE INVENTORY ---
 $report += "<h2>AVEVA / Wonderware / Schneider Electric Software</h2>"
