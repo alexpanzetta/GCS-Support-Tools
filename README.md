@@ -21,6 +21,3 @@ Used to troubleshoot SuiteLink connections.
 
 ### <b>[Galaxy backup Utility (official)](Galaxy_Backup_Setup.zip)</b>
 CMD line utility for Galaxy backups.
-
-### <b>[Galaxy backup Utility (updated)](Galaxy_Backup_Setup_4_1_1_0 1.zip)</b>
-Newer version of CMD line utility for Galaxy backups.
