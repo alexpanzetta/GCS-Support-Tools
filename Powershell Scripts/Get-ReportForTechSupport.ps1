@@ -145,6 +145,35 @@ foreach ($fix in $hotfixes) {
 }
 $report += "</ul>"
 
+
+# --- MACHINE CERTIFICATES IN MY STORE ---
+$report += "<h2>Machine Certificates (MY Store)</h2>"
+
+try {
+    $store = New-Object System.Security.Cryptography.X509Certificates.X509Store("My","LocalMachine")
+    $store.Open("ReadOnly")
+    $certs = $store.Certificates | Sort-Object NotAfter
+
+    if ($certs.Count -gt 0) {
+        $report += "<table border='1'><tr><th>Subject</th><th>Issuer</th><th>Thumbprint</th><th>NotBefore</th><th>NotAfter</th><th>EKU</th></tr>"
+        foreach ($cert in $certs) {
+            $eku = ($cert.Extensions | Where-Object { $_.Oid.FriendlyName -eq "Enhanced Key Usage" } |
+                ForEach-Object {
+                    $_.EnhancedKeyUsages | ForEach-Object { $_.FriendlyName }
+                }) -join ', '
+
+            $report += "<tr><td>$($cert.Subject)</td><td>$($cert.Issuer)</td><td>$($cert.Thumbprint)</td><td>$($cert.NotBefore)</td><td>$($cert.NotAfter)</td><td>$eku</td></tr>"
+        }
+        $report += "</table>"
+    } else {
+        $report += "<p>No certificates found in the LocalMachine\MY store.</p>"
+    }
+    $store.Close()
+} catch {
+    $report += "<p style='color:red;'>Error reading machine certificates: $($_.Exception.Message)</p>"
+}
+
+
 # --- SOFTWARE INVENTORY ---
 $report += "<h2>AVEVA / Wonderware / Schneider Electric Software</h2>"
 
