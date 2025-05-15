@@ -13,21 +13,23 @@
 
 # Function to get installed software by AVEVA
 function Get-SchneiderSoftware {
-    $vendorKeywords = "AVEVA", "Wonderware", "Schneider"
+$vendorKeywords = "AVEVA", "Wonderware", "Schneider"
 
-    $regPaths = @(
-        "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*",
-        "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*"
-    )
+$regPaths = @(
+    "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*",
+    "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*"
+)
 
-    $softwareList = foreach ($path in $regPaths) {
-        Get-ItemProperty -Path $path -ErrorAction SilentlyContinue | Where-Object {
-            ($_.DisplayName -and ($vendorKeywords | Where-Object { $_ -and $_ -ne "" -and $_ -match $_.DisplayName })) -or
-            ($_.Publisher -and ($vendorKeywords | Where-Object { $_ -and $_ -ne "" -and $_ -match $_.Publisher }))
-        }
-    }
+$softwareList = foreach ($path in $regPaths) {
+    Get-ItemProperty -Path $path -ErrorAction SilentlyContinue | Where-Object {
+        $publisher = $_.Publisher
+        if ($publisher) {
+            $vendorKeywords | Where-Object { $publisher -like "*$_*" }  
+        } 
+    } |  Select-Object DisplayName,DisplayVersion, InstallDate,UninstallString
+}
 
-    return $softwareList | Sort-Object DisplayName
+return $softwareList | Sort-Object DisplayName
 }
 
 
